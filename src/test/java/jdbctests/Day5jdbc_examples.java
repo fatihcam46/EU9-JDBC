@@ -48,9 +48,10 @@ System.out.println("======================================================");
         resultSet.close();
         statement.close();
         connection.close();
+System.out.println("================ResultSet Methods===========================");
     }
 
-    @DisplayName("ResultSet Methods")
+    @DisplayName("ResultSet Methods")  //it is easy we can see left hand side
     @Test
     public void test2() throws SQLException {
         Connection connection = DriverManager.getConnection(dbUrl,dbUsername,dbPassword);
@@ -69,7 +70,7 @@ System.out.println("======================================================");
         //to move before first row after we use .last method
         resultSet.beforeFirst();
 
-        //print all second column information
+        //print all second column information  without it cannot print it>>resultSet.beforeFirst(); because our point different
         while (resultSet.next()){
             System.out.println(resultSet.getString(2));//Administration,Marketing,Purchasing...
         }
@@ -77,32 +78,38 @@ System.out.println("======================================================");
         resultSet.close();
         statement.close();
         connection.close();
+ System.out.println("================metadata==============================");
     }
     @Test
     public void test3() throws SQLException {
         Connection connection = DriverManager.getConnection(dbUrl,dbUsername,dbPassword);
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
         ResultSet resultSet = statement.executeQuery("SELECT * FROM departments");
-
-        //get the database related data inside the dbMetedata object
+                                                                    //from employee is all data
+        //get the database related data inside the dbMetadata object
         DatabaseMetaData dbMetadata = connection.getMetaData();
 
         System.out.println("dbMetadata.getUserName() = " + dbMetadata.getUserName());
+        //dbMetadata.getUserName() = HR
         System.out.println("dbMetadata.getDatabaseProductName() = " + dbMetadata.getDatabaseProductName());
+        //dbMetadata.getDatabaseProductName() = Oracle
         System.out.println("dbMetadata.getDatabaseProductVersion() = " + dbMetadata.getDatabaseProductVersion());
+        //dbMetadata.getDatabaseProductVersion() = Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
         System.out.println("dbMetadata.getDriverName() = " + dbMetadata.getDriverName());
+        //dbMetadata.getDriverName() = Oracle JDBC driver
         System.out.println("dbMetadata.getDriverVersion() = " + dbMetadata.getDriverVersion());
+        //dbMetadata.getDriverName() = Oracle JDBC driver
 
-        //get the resultsetmetadata //rsmd
+        //get the ResultSetMetaData //rsmd
         ResultSetMetaData rsMetadata = resultSet.getMetaData();
 
         //how many columns we have ?
         int colCount = rsMetadata.getColumnCount();
-        System.out.println(colCount);
+        System.out.println(colCount);//4
 
         //getting column names
-        System.out.println(rsMetadata.getColumnName(1));
-        System.out.println(rsMetadata.getColumnName(2));
+        System.out.println(rsMetadata.getColumnName(1));//first column:DEPARTMENT_ID
+        System.out.println(rsMetadata.getColumnName(2));//2nd column:DEPARTMENT_NAME
 
         //rsMetadata.getColumnName(i) --> gets column name
         //rsMetadata.getColumnCount() --> total number of columns
@@ -110,8 +117,10 @@ System.out.println("======================================================");
         for (int i = 1; i <= colCount; i++) {
             System.out.println(rsMetadata.getColumnName(i));
         }
-
-        //BREAK UNTIL 12:22
+/* DEPARTMENT_ID
+DEPARTMENT_NAME
+MANAGER_ID
+LOCATION_ID */
         //close connection
         resultSet.close();
         statement.close();

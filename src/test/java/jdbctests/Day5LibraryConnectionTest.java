@@ -5,7 +5,7 @@ import utilities.DBUtils;
 
 import java.sql.*;
 
-public class LibraryConnectionTest {
+public class Day5LibraryConnectionTest {
 
     @Test
     public void test1() throws SQLException {
@@ -20,8 +20,8 @@ public class LibraryConnectionTest {
         //once you set up connection default pointer looks for 0
         //next() --> move pointer to first row
         resultSet.next();
-
-        System.out.println(resultSet.getString(2));
+//1st column info>>
+        System.out.println(resultSet.getString(2));//book name:Mokuta
 
 
         //close connection
@@ -38,7 +38,7 @@ public class LibraryConnectionTest {
         String dbUrl = "jdbc:mysql://34.230.35.214:3306/library1";
         String dbUsername = "library1_client";
         String dbPassword = "WVF4NdGXCKHeE6VQ";
-
+//it means connection done
         DBUtils.createConnection(dbUrl,dbUsername,dbPassword);
 
         DBUtils.destroy();
